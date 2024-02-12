@@ -7,10 +7,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.TextField?>
 
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="org.niaktes.netty.chat.client.Controller">
+  <MenuBar>
+    <Menu text="Клиент">
+      <MenuItem text="Выйти" onAction="#exitAction" />
+    </Menu>
+  </MenuBar>
   <TextArea fx:id="mainArea" editable="false" VBox.vgrow="ALWAYS" />
   <HBox>
-    <TextField fx:id="messageField" HBox.hgrow="ALWAYS" promptText="Введите сообщение..." />
-    <Button text="Отправить" />
+    <TextField fx:id="messageField" HBox.hgrow="ALWAYS" promptText="Введите сообщение..."
+               onAction="#sendMessageAction" />
+    <Button text="Отправить" onAction="#sendMessageAction" />
   </HBox>
 </VBox>

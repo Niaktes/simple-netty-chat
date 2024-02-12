@@ -1,14 +1,36 @@
 package org.niaktes.netty.chat.client;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
-public class Controller {
-    @FXML
-    private Label welcomeText;
+public class Controller implements Initializable {
+
+    private Network network;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    TextField messageField;
+
+    @FXML
+    TextArea mainArea;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        network = new Network((args -> mainArea.appendText((String)args[0])));
+    }
+
+    public void sendMessageAction() {
+        network.sendMessage(messageField.getText());
+        messageField.clear();
+        messageField.requestFocus();
+    }
+
+    public void exitAction() {
+        network.close();
+        Platform.exit();
     }
 }

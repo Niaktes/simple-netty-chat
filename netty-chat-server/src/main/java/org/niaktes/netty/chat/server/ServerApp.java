@@ -7,12 +7,16 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 public class ServerApp {
 
-    public static void main(String[] args) throws InterruptedException {
+    private static final int PORT = 8189;
+
+    public static void main(String[] args) {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
@@ -23,14 +27,15 @@ public class ServerApp {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(new MainHandler());
+                            socketChannel.pipeline().addLast(new StringDecoder(),
+                                    new StringEncoder(), new MainHandler());
                         }
                     });
-            ChannelFuture channelFuture = bootstrap.bind(8189).sync();
+            ChannelFuture channelFuture = bootstrap.bind(PORT).sync();
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
-            throw new InterruptedException();
+            Thread.currentThread().interrupt();
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
