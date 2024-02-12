@@ -6,9 +6,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j;
 
-@Slf4j
+@Log4j
 public class MainHandler extends SimpleChannelInboundHandler<String> {
 
     private static final List<Channel> CHANNELS = new ArrayList<>();
