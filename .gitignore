@@ -28,7 +28,7 @@ build/*
 *~.nib
 
 # akka specific
-logs/*
+*/logs/*
 
 # sbt specific
 target/
@@ -74,3 +74,6 @@ build
 *.pid
 *.db
 *.gz
+
+mvnw*
+.mvn
